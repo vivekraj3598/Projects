@@ -1,0 +1,168 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(120deg, #e2bc40, #e07b40);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    min-height: 100vh;
+}
+
+h1{
+    margin: 8rem 1rem 5rem 1rem;
+    font-size: 4rem;
+}
+
+form input, form button{
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background-color: white;
+}
+
+form button{
+    color: #e07b40;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease ;
+    width: 4rem;
+}
+
+form button:hover{
+    background-color: #e07b40;
+    color: white;
+    border: none;
+}
+
+.todo-list{
+    list-style: none;
+}
+
+.todo{
+    margin: 0.5rem;
+    background-color: white;
+    color: black;
+    font-size: 1.5rem;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.delete-btn, .complete-btn{
+    background-color: rgb(241, 123, 12);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    width: 4.5rem;
+}
+
+.complete-btn{
+    background-color: yellowgreen;
+}
+
+.complete-btn:hover{
+    background-color: green;
+}
+
+.delete-btn:hover{
+    background-color: rgb(216, 93, 11);
+}
+
+.todo-item{
+    padding: 0rem 0.5rem;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.todo{
+    display: flex;
+}
+
+li{
+    flex-grow: 1;
+}
+
+/* Make the font awesome image unclickable */
+.fa-trash, .fa-check{
+    pointer-events: none;
+}
+
+.completed{
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+/* Animations */
+
+.fall{
+    transform: translateY(8rem) rotateZ(20deg);
+    opacity: 0;
+}
+
+/* Deleting all styles on select */
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+}
+
+.select{
+    overflow: hidden;
+    padding: 1rem;
+    position: relative;
+}
+
+select{
+    color: #e07b40;
+    cursor: pointer;
+    padding-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: 13rem;
+    padding: 1rem;
+    position: relative;
+    top: -3px;
+}
+
+.select::after{
+    font-family: 'Consolas';
+  	content: '<>';
+    font-size: 20px;
+    
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+
+    position: absolute;
+    top: 12px;
+    right: 33px;
+  	color: #e07b40;
+  	pointer-events: none;
+}
+
+select:hover{
+    background-color: #e07b40;
+    color: white;
+}
+
+.select:hover::after{
+    color: white;
+}
+
+option{
+    background-color: white;
+    color: #e07b40;
+}
+
+
+
+
+
