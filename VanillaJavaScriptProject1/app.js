@@ -5,7 +5,7 @@ const todoList = document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
 
 //Event Listeners
-document.addEventListener('DOMContentLoaded', getTodos);
+document.addEventListener('DOMContentLoaded', getUncompletedTodos);
 todoButton.addEventListener('click', addToDo);
 todoList.addEventListener('click', deleteCheck);
 filterOption.addEventListener('click', filterTodo);
@@ -28,7 +28,7 @@ function addToDo(event){
     todoDiv.appendChild(newTodo);
 
     // Add/Save todo to local storage
-    saveLocalTodos(todoInput.value);
+    saveLocalUncompletedTodos(todoInput.value);
 
     //Create CheckMark Button
     const completedButton = document.createElement('button');
@@ -65,7 +65,7 @@ function deleteCheck(event){
         //Animation
         todo.classList.add('fall');
         //Delete from local Storage
-        removeLocalTodos(todo);
+        removeLocalUncompletedTodos(todo);
 
         //Finally remove the element
         todo.addEventListener('transitionend', function(){
@@ -75,7 +75,8 @@ function deleteCheck(event){
 
     //if check mark button is clicked
     if(item.classList[0] === "complete-btn"){
-        todo.classList.toggle('completed')
+        todo.classList.toggle('completed');
+        toggleCompleted(todo);
     }
 }
 
@@ -90,11 +91,9 @@ function filterTodo(event){
                 break;
             case 'completed':
                 if(todo.classList.contains("completed")){
-                    console.log('completed');
                     todo.style.display = 'flex';
                 }
                 else{
-                    console.log("uncompleted");
                     todo.style.display = "none";
                 }
                 break;
@@ -110,35 +109,48 @@ function filterTodo(event){
     });
 }
 
-// Save new todos to local storage
-function saveLocalTodos(todo){
+////////////////////////////////////////////////////
+//Saving in local Storage
+////////////////////////////////////////////////////
+
+// Save new uncompleted todos to local storage
+function saveLocalUncompletedTodos(todo){
     // Check if we have any todo in local storage
-    let todos;
-    if(localStorage.getItem('todos') === null){
-        todos = [];
+    let uncompletedtodos;
+    if(localStorage.getItem('uncompletedtodos') === null){
+        uncompletedtodos = [];
     }
     else{
-        todos = JSON.parse(localStorage.getItem('todos'));
+        uncompletedtodos = JSON.parse(localStorage.getItem('uncompletedtodos'));
     }
 
     //Save new todo in local storage
-    todos.push(todo);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    uncompletedtodos.push(todo);
+    localStorage.setItem('uncompletedtodos', JSON.stringify(uncompletedtodos));
 }
 
-// Load saved todos from local storage
-function getTodos(){
+// Load saved uncompleted todos from local storage
+function getUncompletedTodos(){
     
     // Check if we have any todo in local storage
-    let todos;
-    if(localStorage.getItem('todos') === null){
-        todos = [];
+    let uncompletedtodos;
+    let completedtodos;
+
+    if(localStorage.getItem('uncompletedtodos') === null){
+        uncompletedtodos = [];
     }
     else{
-        todos = JSON.parse(localStorage.getItem('todos'));
+        uncompletedtodos = JSON.parse(localStorage.getItem('uncompletedtodos'));
     }
 
-    todos.forEach(function(todo){
+    if(localStorage.getItem('completedtodos') === null){
+        completedtodos = [];
+    }
+    else{
+        completedtodos = JSON.parse(localStorage.getItem('completedtodos'));
+    }
+
+    uncompletedtodos.forEach(function(todo){
 
         //ToDo Div
         const todoDiv = document.createElement('div');
@@ -168,24 +180,143 @@ function getTodos(){
         //Append to List
         todoList.appendChild(todoDiv)
     });
+
+    completedtodos.forEach(function(todo){
+
+        //ToDo Div
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add('todo', 'completed');
+
+        //Create li
+        const newTodo = document.createElement('li');
+        newTodo.innerText = todo;
+        newTodo.classList.add('todo-item', 'd-inline');
+        //Add li to div as a child
+        todoDiv.appendChild(newTodo);
+
+        //Create CheckMark Button
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class="fa fa-check"></i>';
+        completedButton.classList.add("complete-btn");
+        //Add completedbutton to li as a child
+        todoDiv.appendChild(completedButton)
+
+        //Create Delete Button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fa fa-trash"></i>';
+        deleteButton.classList.add("delete-btn");
+        //Add deleteButton to li as a child
+        todoDiv.appendChild(deleteButton)
+
+        //Append to List
+        todoList.appendChild(todoDiv)
+    });
 }
 
-function removeLocalTodos(todo){
+function toggleCompleted(todo){
+    let uncompletedtodos;
+    let completedtodos;
 
-    // Check if we have any todo in local storage
-    let todos;
-    if(localStorage.getItem('todos') === null){
-        todos = [];
+    if(localStorage.getItem('uncompletedtodos') === null){
+        uncompletedtodos = [];
     }
     else{
-        todos = JSON.parse(localStorage.getItem('todos'));
+        uncompletedtodos = JSON.parse(localStorage.getItem('uncompletedtodos'));
+    }
+
+    if(localStorage.getItem('completedtodos') === null){
+        completedtodos = [];
+    }
+    else{
+        completedtodos = JSON.parse(localStorage.getItem('completedtodos'));
+    }
+
+    //Main implementation
+    if(todo.classList.contains('completed')){
+        console.log('completed');
+
+        //Deleting from uncompleted
+        //Getting text in the li element being deleted
+        const todoIndex = todo.children[0].innerText;
+        //Deleting the array element
+        uncompletedtodos.splice(uncompletedtodos.indexOf(todoIndex), 1);
+
+        //Adding to completed
+        completedtodos.push(todoIndex);
+    }
+    else{
+        console.log('uncompleted');
+
+        //Deleting from completed 
+        //Getting text in the li element being deleted
+        const todoIndex = todo.children[0].innerText;
+        //Deleting the array element
+        completedtodos.splice(completedtodos.indexOf(todoIndex), 1);
+
+        //Adding to uncompleted
+        uncompletedtodos.push(todoIndex);
+    }
+
+    localStorage.setItem('completedtodos', JSON.stringify(completedtodos));
+    localStorage.setItem('uncompletedtodos', JSON.stringify(uncompletedtodos));
+}
+
+// function completedToUncompleted(todo){
+
+// }
+
+//Remove uncompleted Todos when trash button pressed
+// function removeLocalUncompletedTodos(todo){
+
+//     // Check if we have any todo in local storage
+//     let uncompletedtodos;
+//     if(localStorage.getItem('uncompletedtodos') === null){
+//         uncompletedtodos = [];
+//     }
+//     else{
+//         uncompletedtodos = JSON.parse(localStorage.getItem('uncompletedtodos'));
+//     }
+
+//     // Getting text in the li element being deleted
+//     const todoIndex = todo.children[0].innerText;
+
+//     //Deleting the array element
+//     uncompletedtodos.splice(uncompletedtodos.indexOf(todoIndex), 1);
+
+//     localStorage.setItem('uncompletedtodos', JSON.stringify(uncompletedtodos));
+// }
+
+function removeLocalUncompletedTodos(todo){
+
+    // Check if we have any todo in local storage
+    let uncompletedtodos;
+    let completedtodos;
+
+    if(localStorage.getItem('uncompletedtodos') === null){
+        uncompletedtodos = [];
+    }
+    else{
+        uncompletedtodos = JSON.parse(localStorage.getItem('uncompletedtodos'));
+    }
+
+    if(localStorage.getItem('completedtodos') === null){
+        completedtodos = [];
+    }
+    else{
+        completedtodos = JSON.parse(localStorage.getItem('completedtodos'));
     }
 
     // Getting text in the li element being deleted
     const todoIndex = todo.children[0].innerText;
 
     //Deleting the array element
-    todos.splice(todos.indexOf(todoIndex), 1);
+    if(todo.classList.contains('completed')){
+        completedtodos.splice(completedtodos.indexOf(todoIndex), 1);
+    }
+    else{
+        uncompletedtodos.splice(uncompletedtodos.indexOf(todoIndex), 1);
+    }
 
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('uncompletedtodos', JSON.stringify(uncompletedtodos));
+    localStorage.setItem('completedtodos', JSON.stringify(completedtodos));
 }
