@@ -179,10 +179,6 @@ option{
     form button{
         margin-right: 0;
     }
-
-    form input{
-        width: 50px;
-    }
 }
 
 @media (max-width: 331px) {
@@ -191,7 +187,7 @@ option{
     }
 
     form input{
-        width: 50px;
+        width: 200px;
     }
 
     h1{
