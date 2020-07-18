@@ -181,7 +181,7 @@ option{
     }
 
     form input{
-        width: 5rem;
+        width: 50px;
     }
 }
 
@@ -191,7 +191,7 @@ option{
     }
 
     form input{
-        width: 5rem;
+        width: 50px;
     }
 
     h1{
