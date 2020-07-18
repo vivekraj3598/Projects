@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: linear-gradient(120deg, #e2bc40, #e07b40);
+    background-image: linear-gradient(0deg, #A5BF6B, #0D7F8C);
     color: white;
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
@@ -24,7 +24,7 @@ form input, form button{
 }
 
 form button{
-    color: #e07b40;
+    color: #0D7F8C;
     background-color: white;
     cursor: pointer;
     transition: all 0.3s ease ;
@@ -33,7 +33,7 @@ form button{
 }
 
 form button:hover{
-    background-color: #e07b40;
+    background-color: #0D7F8C;
     color: white;
     border: none;
 }
@@ -52,7 +52,7 @@ form button:hover{
 }
 
 .delete-btn, .complete-btn{
-    background-color: rgb(241, 123, 12);
+    background-color: #F2913D;
     color: white;
     border: none;
     padding: 0.7rem;
@@ -62,15 +62,15 @@ form button:hover{
 }
 
 .complete-btn{
-    background-color: yellowgreen;
+    background-color: #558C03;
 }
 
 .complete-btn:hover{
-    background-color: green;
+    background-color: #65A603;
 }
 
 .delete-btn:hover{
-    background-color: rgb(216, 93, 11);
+    background-color: #F27B50;
 }
 
 .todo-item{
@@ -121,7 +121,7 @@ select{
 }
 
 select{
-    color: #e07b40;
+    color: #0D7F8C;
     cursor: pointer;
     width: 10rem;
     padding: 0.8rem;
@@ -141,12 +141,12 @@ select{
     position: absolute;
     top: 12px;
     right: 10px;
-  	color: #e07b40;
+  	color: #0D7F8C;
   	pointer-events: none;
 }
 
 select:hover{
-    background-color: #e07b40;
+    background-color: #0D7F8C;
     color: white;
 }
 
@@ -156,7 +156,7 @@ select:hover{
 
 option{
     background-color: white;
-    color: #e07b40;
+    color: #0D7F8C;
 }
 
 .js-items{
@@ -190,7 +190,11 @@ form input{
     }
 
     form input{
-        width: 60%;
+        width: 65%;
+    }
+
+    form button{
+        margin-right: 0rem;
     }
 
 }
