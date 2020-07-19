@@ -14,7 +14,7 @@ filterOption.addEventListener('change', filterTodo);
 
 function addToDo(event){
     //prevent form from submitting
-    event.preventDefault();
+    // event.preventDefault();
 
     //ToDo Div
     const todoDiv = document.createElement('div');
